@@ -9,6 +9,9 @@ export default class extends BaseSchema {
       table.string('nome', 255).notNullable()
       table.string('curso', 255).notNullable()
       table.integer('tipo').notNullable()
+      table.string('email', 255).unique().notNullable()
+      table.string('senha', 180).notNullable()
+      table.string('remember_me_token').nullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
