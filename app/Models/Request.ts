@@ -8,9 +8,6 @@ export default class Request extends BaseModel {
   public id: number
 
   @column()
-  public name: string
-
-  @column()
   public book_id: number
 
   @hasOne(() => Book, {
