@@ -8,16 +8,16 @@ export default class User extends BaseModel {
   public id: number
 
   @column()
-  public name: string
+  public nome: string
 
   @column()
-  public course: string
+  public curso: string
 
   @column()
-  public type: number
+  public tipo: number
 
   @hasMany(() => Request, {
-    localKey: 'request_id',
+    localKey: 'id_solicitacao',
   })
   public requests: HasMany<typeof Request>
 
@@ -25,15 +25,15 @@ export default class User extends BaseModel {
   public email: string
 
   @column({ serializeAs: null })
-  public password: string
+  public senha: string
 
   @column()
-  public rememberMeToken?: string
+  public remember_me_token?: string
 
   @beforeSave()
   public static async hashPassword (User: User) {
     if (User.$dirty.password) {
-      User.password = await Hash.make(User.password)
+      User.senha = await Hash.make(User.senha)
     }
   }
 

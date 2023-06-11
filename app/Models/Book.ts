@@ -7,22 +7,22 @@ export default class Book extends BaseModel {
   public id: number
 
   @column()
-  public title: string
+  public titulo: string
 
   @column()
-  public author: string
+  public autor: string
 
   @column()
-  public cover: string
+  public capa: string
 
   @column()
-  public category: string
+  public categoria: string
 
   @column()
-  public quantity: number
+  public quantidade: number
 
   @hasMany(() => Request, {
-    localKey: 'request_id',
+    localKey: 'id_solicitacao',
   })
   public requests: HasMany<typeof Request>
 

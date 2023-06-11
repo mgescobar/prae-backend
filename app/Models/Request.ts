@@ -8,10 +8,10 @@ export default class Request extends BaseModel {
   public id: number
 
   @column()
-  public book_id: number
+  public id_livro: number
 
   @hasOne(() => Book, {
-    foreignKey: 'book_id',
+    foreignKey: 'id_livro',
   })
   public Book: HasOne<typeof Book>
 
@@ -19,10 +19,10 @@ export default class Request extends BaseModel {
   public book: BelongsTo<typeof Book>
 
   @column()
-  public user_id: number
+  public id_usuario: number
 
   @hasOne(() => User, {
-    foreignKey: 'user_id',
+    foreignKey: 'id_usuario',
   })
   public User: HasOne<typeof User>
 
@@ -34,4 +34,7 @@ export default class Request extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public status: number
 }
