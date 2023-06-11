@@ -12,7 +12,7 @@ export default class UsersController {
         
         const user = await User.create(userPayload)
 
-        if(userPayload.tipo == 3) await user.related('requests').create({})
+        if(userPayload.tipo == 3) await user.related('usuario').create({})
 
         return response.created({user})
     }

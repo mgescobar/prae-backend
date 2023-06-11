@@ -17,9 +17,9 @@ export default class User extends BaseModel {
   public tipo: number
 
   @hasMany(() => Request, {
-    localKey: 'id_solicitacao',
+    foreignKey: 'id_usuario',
   })
-  public requests: HasMany<typeof Request>
+  public usuario: HasMany<typeof Request>
 
   @column()
   public email: string
@@ -32,7 +32,7 @@ export default class User extends BaseModel {
 
   @beforeSave()
   public static async hashPassword (User: User) {
-    if (User.$dirty.password) {
+    if (User.$dirty.senha) {
       User.senha = await Hash.make(User.senha)
     }
   }

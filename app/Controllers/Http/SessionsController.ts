@@ -7,15 +7,19 @@ export default class SessionsController {
     const email = request.input('email')
     const senha = request.input('senha')
   
-    const user = await User
+    try {
+      const user = await User
       .query()
       .where('email', email)      
       .firstOrFail()
-  
-    if (!(await Hash.verify(user.senha, senha))) {
-      return response.unauthorized('Credenciais inválidas.')
+
+      if (!(await Hash.verify(user.senha, senha))) {
+        return response.unauthorized('Credenciais inválidas.')
+      }
+      
+      return response.ok({user}) 
+    } catch (e) {
+      return response.notFound('Usuário não encontrado.')
     }
-    
-    return response.ok({user})    
   }
 }
