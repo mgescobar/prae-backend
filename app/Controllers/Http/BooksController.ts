@@ -8,9 +8,9 @@ export default class BooksController {
     }
 
     public async create ({ response, request }: HttpContextContract) {
-        const bookPayload = request.only(['title', 'author', 'cover', 'category', 'quantity'])
+        const bookPayload = request.only(['titulo', 'autor', 'capa', 'categoria', 'quantidade'])
 
-        const imagem = request.file('cover', {
+        const imagem = request.file('capa', {
             size: '2mb',
             extnames: ['jpg', 'png', 'jpeg'],            
         });
@@ -25,11 +25,11 @@ export default class BooksController {
                 .insertQuery()
                 .table('books')
                 .insert({
-                    title: bookPayload.title,
-                    author: bookPayload.author,
-                    cover: imagemData.path,
-                    category: bookPayload.category,
-                    quantity: bookPayload.quantity,
+                    titulo: bookPayload.titulo,
+                    autor: bookPayload.autor,
+                    capa: imagemData.path,
+                    categoria: bookPayload.categoria,
+                    quantidade: bookPayload.quantidade,
                 })
 
         return response.created({ Book: await Book.query().orderBy('id', 'desc').first()})
