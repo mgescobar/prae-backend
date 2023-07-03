@@ -19,7 +19,7 @@ export default class User extends BaseModel {
   @hasMany(() => Request, {
     foreignKey: 'id_usuario',
   })
-  public usuario: HasMany<typeof Request>
+  public requests: HasMany<typeof Request>
 
   @column()
   public email: string

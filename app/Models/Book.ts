@@ -22,7 +22,7 @@ export default class Book extends BaseModel {
   public quantidade: number
 
   @hasMany(() => Request, {
-    localKey: 'id_solicitacao',
+    foreignKey: 'id_livro',
   })
   public requests: HasMany<typeof Request>
 

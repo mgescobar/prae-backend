@@ -10,24 +10,14 @@ export default class Request extends BaseModel {
   @column()
   public id_livro: number
 
-  @hasOne(() => Book, {
-    foreignKey: 'id_livro',
-  })
-  public Book: HasOne<typeof Book>
-
-  @belongsTo(() => Book)
-  public book: BelongsTo<typeof Book>
-
   @column()
   public id_usuario: number
 
-  @hasOne(() => User, {
-    foreignKey: 'id_usuario',
-  })
-  public User: HasOne<typeof User>
-
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
+
+  @belongsTo(() => Book)
+  public book: BelongsTo<typeof Book>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

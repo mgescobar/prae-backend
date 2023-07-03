@@ -50,4 +50,6 @@ Route.group(() => {
     Route.delete('/:id', 'RequestsController.delete')
     Route.get('/', 'RequestsController.findAll')
     Route.get('/:id', 'RequestsController.findOne')
+    Route.get('/user/:id', 'RequestsController.findByUser')
+    Route.get('/book/:id', 'RequestsController.findByBook')
 }).prefix('requests')

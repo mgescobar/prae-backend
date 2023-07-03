@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Book from 'App/Models/Book'
+import sharp from 'sharp'
+import fs from 'fs/promises'
 
 export default class BooksController {
     public async index ({ response }: HttpContextContract) {
@@ -39,11 +41,35 @@ export default class BooksController {
         const book = await Book.findByOrFail('id', request.param('id'))
         const bookPayload = request.all()
 
+        const imagem = request.file('cover', {
+            size: '2mb',
+            extnames: ['jpg', 'png', 'jpeg'],
+        });
+
+        if (imagem) {
+            const tmpPath = imagem.tmpPath!;
+            const imageData = await fs.readFile(tmpPath);
+            const resizedImageData = await sharp(imageData)
+            .resize(200, 300)
+            .toBuffer();
+            const hexString = '\\x' + resizedImageData.toString('hex');
+            bookPayload.cover = hexString;
+          }
+
         if(!book) return response.notFound({message: 'Livro não encontrado'})
 
-        book.merge(bookPayload)
-        await book.save()
-        return response.ok({book})
+        await Database
+                .insertQuery()
+                .table('books')
+                .insert({
+                    titulo: bookPayload.titulo? bookPayload.titulo : book.titulo,
+                    autor: bookPayload.autor? bookPayload.autor : book.autor,
+                    capa: bookPayload.capa? bookPayload.capa : book.capa,
+                    categoria: bookPayload.categoria? bookPayload.categoria : book.categoria,
+                    quantidade: bookPayload.quantidade? bookPayload.quantidade : book.quantidade, 
+                })
+
+        return response.ok({ Book: await Book.findByOrFail('id', request.param('id'))})
     }
 
     public async delete ({ request, response }: HttpContextContract){
