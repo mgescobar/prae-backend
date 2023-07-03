@@ -27,9 +27,6 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   public senha: string
 
-  @column()
-  public remember_me_token?: string
-
   @beforeSave()
   public static async hashPassword (User: User) {
     if (User.$dirty.senha) {
